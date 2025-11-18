@@ -1,30 +1,37 @@
 <?php 
 session_start();
+
 if (isset($_SESSION['AdminId']) && 
     isset($_SESSION['role'])     &&
-    isset($_GET['student_id'])) {
+    isset($_GET['StudentId'])) {
 
   if ($_SESSION['role'] == 'Admin') {
-     include "../DB_connection.php";
-     include "data/student.php";
 
-     $id = $_GET['student_id'];
-     if (removeStudent($id, $conn)) {
-     	$sm = "Successfully deleted!";
+     include "../DB_connection.php";
+
+     $id = $_GET['StudentId'];
+
+     // DELETE student
+     $sql = "DELETE FROM students WHERE StudentId = ?";
+     $stmt = $conn->prepare($sql);
+
+     if ($stmt->execute([$id])) {
+        $sm = "Successfully deleted!";
         header("Location: student.php?success=$sm");
         exit;
-     }else {
+     } else {
         $em = "Unknown error occurred";
         header("Location: student.php?error=$em");
         exit;
      }
 
-
-  }else {
+  } else {
     header("Location: student.php");
     exit;
-  } 
-}else {
-	header("Location: teacher.php");
+  }
+
+} else {
+	header("Location: student.php");
 	exit;
-} 
+}
+?>

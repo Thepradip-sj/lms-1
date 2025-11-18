@@ -403,7 +403,7 @@
     					<option value="2">
     						<div class="role-option">
     							<span class="role-icon teacher-icon"><i class="fas fa-chalkboard-teacher"></i></span>
-    							Teacher
+    							Instructor
     						</div>
     					</option>
     					<option value="3">

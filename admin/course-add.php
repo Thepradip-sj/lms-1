@@ -5,8 +5,8 @@ if (isset($_SESSION['AdminId']) &&
 
     if ($_SESSION['role'] == 'Admin') {
        include '../DB_connection.php';
-       include 'data/teacher.php'; // For instructor dropdown
-       $instructors = getAllTeachers($conn);
+       include 'data/instructor.php'; // For instructor dropdown
+       $instructors = getAllInstructors($conn);
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,7 +56,7 @@ if (isset($_SESSION['AdminId']) &&
           <label class="form-label">Instructor</label>
           <select name="InstructorId" class="form-control">
               <?php foreach ($instructors as $inst) { ?>
-                <option value="<?=$inst['teacher_id']?>"><?=$inst['fname'].' '.$inst['lname']?></option>
+                <option value="<?=$inst['InstructorID']?>"><?=$inst['fname'].' '.$inst['lname']?></option>
               <?php } ?>
           </select>
         </div>

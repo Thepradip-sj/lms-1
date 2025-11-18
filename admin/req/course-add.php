@@ -33,7 +33,6 @@ if ( isset($_POST['CName']) &&
         exit;
     }
 
-    // Insert course
     $sql  = "INSERT INTO COURSE(CName, Credits, CDuration, InstructorId, AdminId)
              VALUES(?,?,?,?,?)";
     $stmt = $conn->prepare($sql);

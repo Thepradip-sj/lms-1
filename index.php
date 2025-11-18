@@ -380,7 +380,7 @@ if ($setting != 0) {
 				<div class="welcome-content">
 					<img src="logo.png" class="school-logo" alt="Lear Mate">
 					<h1 class="welcome-title">Welcome to Learn Mate</h1>
-					<p class="welcome-subtitle"><?=$setting['slogan']?></p>
+					<p class="welcome-subtitle"></p>
 					<div class="mt-4">
 						<a href="#about" class="btn btn-primary-custom me-3">Learn More</a>
 						<a href="login.php" class="btn btn-outline-light">Get Started</a>
@@ -510,7 +510,7 @@ if ($setting != 0) {
     <!-- Footer -->
     <footer class="footer">
     	<div class="container">
-    		<p>Copyright &copy; <?=$setting['current_year']?> Learn Mate. All rights reserved.</p>
+    		<p>Copyright &copy; 2025 Learn Mate. All rights reserved.</p>
     		<div class="mt-3">
     			<a href="#" class="text-light me-3"><i class="fab fa-facebook-f"></i></a>
     			<a href="#" class="text-light me-3"><i class="fab fa-twitter"></i></a>

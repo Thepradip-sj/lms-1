@@ -15,14 +15,14 @@
              href="index.php">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="classes.php">Classes</a>
+          <a class="nav-link" href="courses.php">Courses</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="students.php">Students</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="students.php">Students Grade</a>
-        </li>
+  <a class="nav-link" href="grades-center.php">Students Grade</a>
+</li>
         <li class="nav-item">
           <a class="nav-link" href="pass.php">Change Password</a>
         </li>

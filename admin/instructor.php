@@ -6,17 +6,13 @@ if (isset($_SESSION['AdminId']) && isset($_SESSION['role'])) {
     if ($_SESSION['role'] == 'Admin') {
 
         include "../DB_connection.php";
+        include "data/instructor.php";
 
         // Fetch all instructors
         $sql = "SELECT * FROM Instructor ORDER BY InstructorId DESC";
         $result = $conn->query($sql);
 
-        $instructors = [];
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                $instructors[] = $row;
-            }
-        }
+       $instructors = getAllInstructors($conn);
 ?>
 <!DOCTYPE html>
 <html lang="en">

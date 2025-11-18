@@ -49,23 +49,44 @@ if (isset($_SESSION['AdminId']) &&
                     <th>Action</th>
                   </tr>
                 </thead>
+                
                 <tbody>
-                  <?php $i=0; foreach ($courses as $course) { $i++; 
-                       $inst = getInstructorById($course['InstructorId'], $conn);
-                  ?>
-                  <tr>
-                    <th><?=$i?></th>
-                    <td><?=$course['CName']?></td>
-                    <td><?=$course['Credits']?></td>
-                    <td><?=$course['CDuration']?></td>
-                    <td><?=$inst['fname'].' '.$inst['lname']?></td>
-                    <td>
-                        <a href="course-edit.php?CourseID=<?=$course['CourseID']?>" class="btn btn-warning">Edit</a>
-                        <a href="course-delete.php?CourseID=<?=$course['CourseID']?>" class="btn btn-danger">Delete</a>
-                    </td>
-                  </tr>
-                  <?php } ?>
-                </tbody>
+                    <?php 
+                    $allInstructors = getAllInstructors($conn);
+
+                    $i = 0; 
+                    foreach ($courses as $course) { 
+                        $i++; 
+                        
+                        // default (if instructor not found)
+                        $inst = [
+                            'fname' => 'N/A',
+                            'lname' => ''
+                        ];
+
+                        // find matching instructor
+                        foreach ($allInstructors as $one) {
+                            if ($one['InstructorId'] == $course['InstructorId']) {
+                                $inst = $one;
+                                break;
+                            }
+                        }
+                    ?>
+                    <tr>
+                        <th><?= $i ?></th>
+                        <td><?= $course['CName'] ?></td>
+                        <td><?= $course['Credits'] ?></td>
+                        <td><?= $course['CDuration'] ?></td>
+
+                        <td><?= $inst['fname'] . ' ' . $inst['lname'] ?></td>
+
+                        <td>
+                            <a href="course-edit.php?CourseID=<?= $course['CourseID'] ?>" class="btn btn-warning">Edit</a>
+                            <a href="course-delete.php?CourseID=<?= $course['CourseID'] ?>" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                    <?php } ?>
+              </tbody>
             </table>
         </div>
         <?php } else { ?>

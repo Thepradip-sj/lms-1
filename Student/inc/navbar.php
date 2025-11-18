@@ -15,7 +15,7 @@
              href="index.php">Dashboard</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="grade.php">Grade Summary</a>
+          <a class="nav-link" href="student-grade.php">Grade Summary</a>
         </li>
         <li class="nav-item">
           <a class="nav-link" href="pass.php">Change Password</a>

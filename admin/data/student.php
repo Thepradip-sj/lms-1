@@ -7,91 +7,74 @@ function getAllStudents($conn){
    $stmt->execute();
 
    if ($stmt->rowCount() >= 1) {
-     $students = $stmt->fetchAll();
-     return $students;
-   }else {
-   	return 0;
+     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+   } else {
+     return 0;
    }
 }
 
 // DELETE
 function removeStudent($id, $conn){
    $sql  = "DELETE FROM students
-           WHERE student_id=?";
+            WHERE StudentId = ?";
    $stmt = $conn->prepare($sql);
-   $re   = $stmt->execute([$id]);
-   if ($re) {
-     return 1;
-   }else {
-    return 0;
-   }
+   return $stmt->execute([$id]) ? 1 : 0;
 }
 
 // Get Student By Id 
 function getStudentById($id, $conn){
    $sql = "SELECT * FROM students
-           WHERE student_id=?";
+           WHERE StudentId = ?";
    $stmt = $conn->prepare($sql);
    $stmt->execute([$id]);
 
    if ($stmt->rowCount() == 1) {
-     $student = $stmt->fetch();
-     return $student;
-   }else {
-    return 0;
+     return $stmt->fetch(PDO::FETCH_ASSOC);
+   } else {
+     return 0;
    }
 }
 
-
-// Check if the username Unique
-function unameIsUnique($uname, $conn, $student_id=0){
-   $sql = "SELECT username, student_id FROM students
-           WHERE username=?";
+// Check if the username is Unique
+function unameIsUnique($uname, $conn, $student_id = 0){
+   $sql = "SELECT username, StudentId FROM students
+           WHERE username = ?";
    $stmt = $conn->prepare($sql);
    $stmt->execute([$uname]);
    
    if ($student_id == 0) {
+     return ($stmt->rowCount() >= 1) ? 0 : 1;
+   } else {
      if ($stmt->rowCount() >= 1) {
-       return 0;
-     }else {
-      return 1;
-     }
-   }else {
-    if ($stmt->rowCount() >= 1) {
        $student = $stmt->fetch();
-       if ($student['student_id'] == $student_id) {
-         return 1;
-       }else {
-        return 0;
-      }
-     }else {
-      return 1;
+       return ($student['StudentId'] == $student_id) ? 1 : 0;
+     } else {
+       return 1;
      }
    }
-   
 }
 
-
-// Search 
+// Search Students
 function searchStudents($key, $conn){
-   $key = preg_replace('/(?<!\\\)([%_])/', '\\\$1',$key);
-   $sql = "SELECT * FROM students
-           WHERE student_id LIKE ? 
-           OR fname LIKE ?
-           OR address LIKE ?
-           OR email_address LIKE ?
-           OR parent_fname LIKE ?
-           OR parent_lname LIKE ?
-           OR parent_phone_number LIKE ?
-           OR lname LIKE ?
-           OR username LIKE ?";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute([$key, $key, $key, $key, $key, $key, $key, $key, $key]);
+   // Escape SQL wildcard characters
+   $key = "%$key%";
 
-   if ($stmt->rowCount() == 1) {
-     $students = $stmt->fetchAll();
-     return $students;
-   }else {
-    return 0;
+   $sql = "SELECT * FROM students
+           WHERE StudentId LIKE ?
+           OR fname LIKE ?
+           OR lname LIKE ?
+           OR username LIKE ?
+           OR address LIKE ?
+           OR gender LIKE ?
+           OR SMail LIKE ?
+           OR SContact LIKE ?";
+   
+   $stmt = $conn->prepare($sql);
+   $stmt->execute([$key, $key, $key, $key, $key, $key, $key, $key]);
+
+   if ($stmt->rowCount() >= 1) {
+     return $stmt->fetchAll(PDO::FETCH_ASSOC);
+   } else {
+     return 0;
    }
 }

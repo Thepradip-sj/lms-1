@@ -2,31 +2,27 @@
 
 // Get Instructor by ID
 function getInstructorById($InstructorId, $conn){
-   $sql = "SELECT * FROM Instructor ORDER BY InstructorId DESC";
-$stmt = $conn->prepare($sql);
-$stmt->execute();
-$instructors = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $sql = "SELECT * FROM Instructor WHERE InstructorId = ?";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$InstructorId]);
 
-   if ($stmt->rowCount() == 1) {
-     $instructor = $stmt->fetch();
-     return $instructor;
-   }else {
-     return 0;
-   }
+    if ($stmt->rowCount() == 1) {
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    } else {
+        return 0;
+    }
 }
 
 // Get All Instructors
 function getAllInstructors($conn){
-   $sql = "SELECT * FROM Instructor";
-   $stmt = $conn->prepare($sql);
-   $stmt->execute();
+    $sql = "SELECT * FROM Instructor ORDER BY InstructorId ";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
 
-   if ($stmt->rowCount() >= 1) {
-     $instructors = $stmt->fetchAll();
-     return $instructors;
-   }else {
-     return 0;
-   }
+    if ($stmt->rowCount() >= 1) {
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+    return 0;
 }
 
 // Check if username is Unique

@@ -8,10 +8,10 @@ if (isset($_SESSION['AdminId']) &&
 
        include "../DB_connection.php";
        include "data/course.php";
-       include "data/teacher.php";
+       include "data/instructor.php";
 
        $course = getCourseById($_GET['CourseID'], $conn);
-       $instructors = getAllTeachers($conn);
+       $instructors = getAllInstructors($conn);
 
        if ($course == 0) {
          header("Location: course.php");
@@ -66,9 +66,9 @@ if (isset($_SESSION['AdminId']) &&
           <label class="form-label">Instructor</label>
           <select name="InstructorId" class="form-control">
               <?php foreach ($instructors as $inst) { 
-                   $selected = ($inst['teacher_id'] == $course['InstructorId']) ? "selected" : "";
+                   $selected = ($inst['InstructorId'] == $course['InstructorId']) ? "selected" : "";
               ?>
-                <option value="<?=$inst['teacher_id']?>" <?=$selected?>>
+                <option value="<?=$inst['InstructorId']?>" <?=$selected?>>
                    <?=$inst['fname'].' '.$inst['lname']?>
                 </option>
               <?php } ?>

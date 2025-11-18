@@ -13,10 +13,11 @@ function getAllCourses($conn){
    }
 }
 
+
 // Get class by ID
 function getCourseById($CourseId, $conn){
    $sql = "SELECT * FROM Course
-           WHERE CourseID=?";
+           WHERE CourseId=?";
    $stmt = $conn->prepare($sql);
    $stmt->execute([$CourseId]);
 
@@ -27,6 +28,7 @@ function getCourseById($CourseId, $conn){
     return 0;
    }
 }
+
 
 // DELETE
 function removeCourse($id, $conn){

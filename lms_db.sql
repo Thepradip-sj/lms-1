@@ -44,9 +44,9 @@ CREATE TABLE `message` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `message` VALUES
-(1, 'John doe', 'es@gmail.com', 'Hello, world', '2023-02-17 23:39:15'),
-(2, 'John doe', 'es@gmail.com', 'Hi', '2023-02-17 23:49:19'),
-(3, 'John doe', 'es@gmail.com', 'Hey, ', '2023-02-17 23:49:36');
+(1, 'Som Ganguly', 'somganguly99@gmail.com', 'Hello, world', '2025-11-17 23:39:15'),
+(2, 'Raj Majumdar', 'rajskider@gmail.com', 'Hi', '2025-11-18 01:00:12'),
+(3, 'Pradip Adhikary', 'adhikarypradip@gmail.com', 'Hey, ', '2025-11-18 02:05:36');
 
 -- --------------------------------------------------------
 -- Table structure for `registrar_office`
@@ -80,47 +80,26 @@ INSERT INTO `setting` VALUES
 -- --------------------------------------------------------
 
 CREATE TABLE `students` (
-  `student_id` int(11) NOT NULL,
+  `StudentId` INT AUTO_INCREMENT PRIMARY KEY,
   `username` varchar(127) NOT NULL,
   `password` varchar(255) NOT NULL,
   `fname` varchar(127) NOT NULL,
   `lname` varchar(255) NOT NULL,
-  `grade` int(11) NOT NULL,
-  `section` int(11) NOT NULL,
   `address` varchar(31) NOT NULL,
   `gender` varchar(7) NOT NULL,
-  `email_address` varchar(255) NOT NULL,
-  `date_of_birth` date NOT NULL,
-  `date_of_joined` timestamp NULL DEFAULT current_timestamp(),
-  `parent_fname` varchar(127) NOT NULL,
-  `parent_lname` varchar(127) NOT NULL,
-  `parent_phone_number` varchar(31) NOT NULL
+  `SMail` VARCHAR(100) UNIQUE NOT NULL,
+  `SContact` varchar(31) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `students` VALUES
-(1, 'Som', '$2a$12$NXDNYHSVg8lml.gdQl4yGe9bJzXbq3xb2YPCPofGhmKDgNYLcwppy', 'John', 'Doe', 1, 1, 'California, Los angeles', 'Male', 'abas55@ab.com', '2012-09-12', '2019-12-11 14:16:44', 'Doe', 'Mark', '09393'),
-(3, 'Pradip', '$2a$12$NXDNYHSVg8lml.gdQl4yGe9bJzXbq3xb2YPCPofGhmKDgNYLcwppy', 'Abas', 'A.', 2, 1, 'Berlin', 'Male', 'abas@ab.com', '2002-12-03', '2021-12-01 14:16:51', 'dsf', 'dfds', '7979'),
-(4, 'jo', '$2a$12$NXDNYHSVg8lml.gdQl4yGe9bJzXbq3xb2YPCPofGhmKDgNYLcwppy', 'John3', 'Doe', 1, 1, 'California, Los angeles', 'Female', 'jo@jo.com', '2013-06-13', '2022-09-10 13:48:49', 'Doe', 'Mark', '074932040'),
-(5, 'jo2', '$2a$12$NXDNYHSVg8lml.gdQl4yGe9bJzXbq3xb2YPCPofGhmKDgNYLcwppy', 'Jhon', 'Doe', 1, 1, 'UK', 'Male', 'jo@jo.com', '1990-02-15', '2023-02-12 18:11:26', 'Doe', 'Do', '0943568654');
-
+(1, 'Som', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq','Som', 'Ganguly', 'Kolkata,West Bengal', 'Male','somganguly99@gmail.com','8017443971'),
+(3, 'Pradip', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq','Pradip', 'Adhikary', 'Hoogly,West Bengal', 'Male','adhikarypradip@ap.com', '9051465292'),
+(4, 'Raj', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq','Raj', 'Majumdar', 'Bhopal, Madhya Pradesh', 'Male','rajmaj@mail.com', '9876543210'),
+(5, 'Nimit', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq','Nimit', 'Sodhani', 'Newtown, West Bengal', 'Male','nimitsodhani@mail.com', '9123456780');
 -- --------------------------------------------------------
 -- Table structure for `student_score`
 -- --------------------------------------------------------
 
-CREATE TABLE `student_score` (
-  `id` int(11) NOT NULL,
-  `semester` varchar(100) NOT NULL,
-  `year` int(11) NOT NULL,
-  `student_id` int(11) NOT NULL,
-  `teacher_id` int(11) NOT NULL,
-  `subject_id` int(11) NOT NULL,
-  `results` varchar(512) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
-INSERT INTO `student_score` VALUES
-(1, 'II', 2021, 1, 1, 1, '10 15,15 20,10 10,10 20,30 35'),
-(2, 'II', 2023, 1, 1, 4, '15 20,4 5'),
-(3, 'I', 2022, 1, 1, 5, '10 20,50 50');
 
 -- --------------------------------------------------------
 -- Table structure for `Instructor` (create first)
@@ -141,9 +120,9 @@ CREATE TABLE `Instructor` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `Instructor` (`InstructorId`, `username`, `password`, `fname`, `lname`, `address`, `IContact`, `qualification`, `gender`, `IMail`) VALUES
-(1, 'Koustav', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq.', 'Koustav', 'Singh', 'Garia , Kolkata', '8809224567', 'BSc', 'Male', 'koudtav@gmail.com'),
+(1, 'Koustav', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq', 'Koustav', 'Singh', 'Garia , Kolkata', '8809224567', 'BSc', 'Male', 'koudtav@gmail.com'),
 (2, 'Rajesh', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq', 'Rajesh', 'Kumar', 'Patna, Bihar', '8809224561', 'MSc', 'Male', 'rajesh@mail.com'),
-(5, 'Anirban', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq.', 'Anirban', 'Bandopadhyay', 'Dhanbad, Jharkhand', '8809224568', 'BTech', 'Male', 'anirban@ab.com'),
+(5, 'Anirban', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq', 'Anirban', 'Bandopadhyay', 'Dhanbad, Jharkhand', '8809224568', 'BTech', 'Male', 'anirban@ab.com'),
 (6, 'test_teacher', '$2y$10$yMjnmAzIkNrRzg78cTps3euVLdrEjQ0jN23/RFDT3qlpVrDF/Ivbq', 'A', 'Test', 'Teacher', '00000000', 'MSc', 'Male', 't@test.com');
 
 -- --------------------------------------------------------
@@ -176,13 +155,77 @@ INSERT INTO `COURSE` (`CName`, `Credits`, `CDuration`, `InstructorId`, `AdminId`
 ('Artificial Intelligence', 3, '1 Semester', 5, 1);
 
 
+CREATE TABLE Enrolls_In (
+  StudentId INT,
+  CourseId INT,
+  PRIMARY KEY (StudentId, CourseId),
+  FOREIGN KEY (StudentId) REFERENCES students(StudentId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  FOREIGN KEY (CourseId) REFERENCES course(CourseId)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+
+INSERT INTO Enrolls_In (StudentId, CourseId) VALUES
+(1, 1),  -- Som enrolled in PHP
+(1, 2),  -- Som enrolled in Python
+(3, 3),  -- Pradip enrolled in DBMS
+(4, 1),  -- Raj enrolled in PHP
+(4, 3),  -- Raj enrolled in DBMS
+(5, 2),  -- Nimit enrolled in Python
+(5, 4);  -- Nimit enrolled in Data Structures
+
+
+CREATE TABLE Quiz (
+    QuizId INT AUTO_INCREMENT PRIMARY KEY,
+
+    StudentId INT NOT NULL,
+    InstructorId INT NOT NULL,
+    CourseId INT NOT NULL,
+
+    Results TEXT NOT NULL,   
+    Semester VARCHAR(20) NOT NULL,
+    Year VARCHAR(10) NOT NULL,
+
+    FOREIGN KEY (StudentId) REFERENCES Students(StudentId)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+
+    FOREIGN KEY (InstructorId) REFERENCES Instructor(InstructorId)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+
+    FOREIGN KEY (CourseId) REFERENCES COURSE(CourseId)
+        ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+INSERT INTO Quiz (StudentId, InstructorId, CourseId, Results, Semester, Year) VALUES
+-- Som (ID 1) → Course 1 (Instructor 1)
+(1, 1, 1, '88 100, 92 100, 76 80, 90 100', '1', '2025'),
+
+-- Som (ID 1) → Course 2 (Instructor 2)
+(1, 2, 2, '75 100, 82 100, 70 80, 88 100, 90 100', '1', '2025'),
+
+-- Pradip (ID 3) → Course 3 (Instructor 5)
+(3, 5, 3, '80 100, 78 100, 85 100', '1', '2025'),
+
+-- Raj (ID 4) → Course 1 (Instructor 1)
+(4, 1, 1, '90 100, 86 100, 70 80, 88 100', '1', '2025'),
+
+-- Raj (ID 4) → Course 3 (Instructor 5)
+(4, 5, 3, '76 100, 84 100, 79 80, 81 100', '1', '2025'),
+
+-- Nimit (ID 5) → Course 2 (Instructor 2)
+(5, 2, 2, '92 100, 89 100, 80 80', '1', '2025'),
+
+-- Nimit (ID 5) → Course 4 (Instructor 2)
+(5, 2, 4, '70 100, 78 100, 88 100, 82 80', '1', '2025');
 
 
 ALTER TABLE `message` ADD PRIMARY KEY (`message_id`);
 
 ALTER TABLE `setting` ADD PRIMARY KEY (`id`);
-ALTER TABLE `students` ADD PRIMARY KEY (`student_id`), ADD UNIQUE KEY `username` (`username`);
-ALTER TABLE `student_score` ADD PRIMARY KEY (`id`);
+ALTER TABLE `students`  ADD UNIQUE KEY `username` (`username`);
+
 
 
 
@@ -190,11 +233,12 @@ ALTER TABLE `student_score` ADD PRIMARY KEY (`id`);
 ALTER TABLE Admin AUTO_INCREMENT = 1;
 ALTER TABLE Instructor AUTO_INCREMENT = 1;
 ALTER TABLE COURSE AUTO_INCREMENT = 1;
+ALTER TABLE students AUTO_INCREMENT = 1;
 
 ALTER TABLE `message` MODIFY `message_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 ALTER TABLE `setting` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
-ALTER TABLE `students` MODIFY `student_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
-ALTER TABLE `student_score` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+
 
 COMMIT;

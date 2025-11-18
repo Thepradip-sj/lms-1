@@ -19,3 +19,15 @@ function adminPasswordVerify($admin_pass, $conn, $AdminId){
     return 0;
    }
 }
+
+function getAllAdmins($conn){
+    $sql = "SELECT * FROM admin";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute();
+
+    if ($stmt->rowCount() >= 1) {
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    } else {
+        return 0;
+    }
+}
