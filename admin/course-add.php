@@ -1,13 +1,12 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && 
+if (isset($_SESSION['AdminId']) && 
     isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == 'Admin') {
-      include '../DB_connection.php';
-      include 'data/grade.php';
-      $grades = getAllGrades($conn);
-
+       include '../DB_connection.php';
+       include 'data/teacher.php'; // For instructor dropdown
+       $instructors = getAllTeachers($conn);
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -22,82 +21,62 @@ if (isset($_SESSION['admin_id']) &&
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <?php 
-        include "inc/navbar.php";
-     ?>
+    <?php include "inc/navbar.php"; ?>
+
      <div class="container mt-5">
-        <a href="course.php"
-           class="btn btn-dark">Go Back</a> <br><br>
-        <?php if ($grades == 0) { ?>
-          <div class="alert alert-info" role="alert">
-           First create grade.
-          </div>
-        <?php }else{ ?>
+        <a href="course.php" class="btn btn-dark">Go Back</a>
 
-        <form method="post"
-              class="shadow p-3 mt-5 form-w" 
-              action="req/course-add.php">
-
+        <form method="post" class="shadow p-3 mt-5 form-w" action="req/course-add.php">
         <h3>Add New Course</h3><hr>
+
         <?php if (isset($_GET['error'])) { ?>
-          <div class="alert alert-danger" role="alert">
-           <?=$_GET['error']?>
-          </div>
+          <div class="alert alert-danger"><?=$_GET['error']?></div>
         <?php } ?>
+
         <?php if (isset($_GET['success'])) { ?>
-          <div class="alert alert-success" role="alert">
-           <?=$_GET['success']?>
-          </div>
+          <div class="alert alert-success"><?=$_GET['success']?></div>
         <?php } ?>
-        
+
         <div class="mb-3">
           <label class="form-label">Course Name</label>
-          <input type="text" 
-                 class="form-control"
-                 name="course_name">
+          <input type="text" name="CName" class="form-control">
         </div>
+
         <div class="mb-3">
-          <label class="form-label">Course Code</label>
-          <input type="text" 
-                 class="form-control"
-                 name="course_code">
+          <label class="form-label">Credits</label>
+          <input type="number" name="Credits" class="form-control">
         </div>
+
         <div class="mb-3">
-          <label class="form-label">Grade</label>
-          <select name="grade"
-                  class="form-control" >
-                  <?php foreach ($grades as $grade) { ?>
-                    <option value="<?=$grade['grade_id']?>">
-                       <?=$grade['grade_code'].'-'.$grade['grade']?>
-                    </option> 
-                  <?php } ?>
-                  
+          <label class="form-label">Duration</label>
+          <input type="text" name="CDuration" class="form-control">
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">Instructor</label>
+          <select name="InstructorId" class="form-control">
+              <?php foreach ($instructors as $inst) { ?>
+                <option value="<?=$inst['teacher_id']?>"><?=$inst['fname'].' '.$inst['lname']?></option>
+              <?php } ?>
           </select>
         </div>
+
       <button type="submit" class="btn btn-primary">Create</button>
      </form>
      </div>
-     <?php } ?>
 
-     
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>	
     <script>
         $(document).ready(function(){
-             $("#navLinks li:nth-child(8) a").addClass('active');
+             $("#navLinks li:nth-child(6) a").addClass('active');
         });
     </script>
 
 </body>
 </html>
 <?php 
-
-  }else {
-    header("Location: ../login.php");
-    exit;
-  } 
-}else {
-	header("Location: ../login.php");
-	exit;
-} 
-
+  } else { header("Location: ../login.php"); exit; }
+} else {
+	header("Location: ../login.php"); exit;
+}
 ?>

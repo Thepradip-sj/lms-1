@@ -1,66 +1,60 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && 
-    isset($_SESSION['role'])) {
+if (isset($_SESSION['AdminId']) && isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == 'Admin') {
-    	
 
-if (isset($_POST['course_name']) &&
-    isset($_POST['course_code']) && 
-    isset($_POST['grade'])) {
-    
+if ( isset($_POST['CName']) &&
+     isset($_POST['Credits']) &&
+     isset($_POST['CDuration']) &&
+     isset($_POST['InstructorId']) ) {
+
     include '../../DB_connection.php';
 
-    $course_name = $_POST['course_name'];
-    $course_code = $_POST['course_code'];
-    $grade = $_POST['grade'];
+    $CName       = $_POST['CName'];
+    $Credits     = $_POST['Credits'];
+    $CDuration   = $_POST['CDuration'];
+    $InstructorId = $_POST['InstructorId'];
+    $AdminId     = $_SESSION['AdminId'];
 
-  if (empty($course_name)) {
-		$em  = "course name is required";
-		header("Location: ../course-add.php?error=$em");
-		exit;
-	}else if(empty($course_code)) {
-    $em  = "course code is required";
+    if (empty($CName)) {
+        $em = "Course Name is required";
+        header("Location: ../course-add.php?error=$em");
+        exit;
+    }
+    else if (empty($Credits)) {
+        $em = "Credits are required";
+        header("Location: ../course-add.php?error=$em");
+        exit;
+    }
+    else if (empty($CDuration)) {
+        $em = "Duration is required";
+        header("Location: ../course-add.php?error=$em");
+        exit;
+    }
+
+    // Insert course
+    $sql  = "INSERT INTO COURSE(CName, Credits, CDuration, InstructorId, AdminId)
+             VALUES(?,?,?,?,?)";
+    $stmt = $conn->prepare($sql);
+    $stmt->execute([$CName, $Credits, $CDuration, $InstructorId, $AdminId]);
+
+    $sm = "New course created successfully";
+    header("Location: ../course-add.php?success=$sm");
+    exit;
+
+} else {
+    $em = "An error occurred";
     header("Location: ../course-add.php?error=$em");
     exit;
-  }else if (empty($grade)) {
-		$em  = "Grade is required";
-		header("Location: ../course-add.php?error=$em");
-		exit;
-	}else {
-        // check if the class already exists
-        $sql_check = "SELECT * FROM subjects 
-                      WHERE grade=? AND subject_code=?";
-        $stmt_check = $conn->prepare($sql_check);
-        $stmt_check->execute([$grade, $course_code]);
-        if ($stmt_check->rowCount() > 0) {
-           $em  = "The course is already exists";
-           header("Location: ../course-add.php?error=$em");
-           exit;
-        }else {
-          $sql  = "INSERT INTO
-                 subjects(grade, subject, subject_code)
-                 VALUES(?,?,?)";
-          $stmt = $conn->prepare($sql);
-          $stmt->execute([$grade, $course_name, $course_code]);
-          $sm = "New course created successfully";
-          header("Location: ../course-add.php?success=$sm");
-          exit;
-        } 
-	}
-    
-  }else {
-  	$em = "An error occurred";
-    header("Location: ../course-add.php?error=$em");
-    exit;
-  }
+}
 
-  }else {
+    } else {
+        header("Location: ../../logout.php");
+        exit;
+    }
+
+} else {
     header("Location: ../../logout.php");
     exit;
-  } 
-}else {
-	header("Location: ../../logout.php");
-	exit;
-} 
+}

@@ -1,10 +1,10 @@
 <?php 
 
-function adminPasswordVerify($admin_pass, $conn, $admin_id){
-   $sql = "SELECT * FROM admin
-           WHERE admin_id=?";
+function adminPasswordVerify($admin_pass, $conn, $AdminId){
+   $sql = "SELECT * FROM Admin
+           WHERE AdminId=?";
    $stmt = $conn->prepare($sql);
-   $stmt->execute([$admin_id]);
+   $stmt->execute([$AdminId]);
 
    if ($stmt->rowCount() == 1) {
      $admin = $stmt->fetch();

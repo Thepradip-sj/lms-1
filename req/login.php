@@ -26,7 +26,7 @@ if (isset($_POST['uname']) &&
 	}else {
         
         if($role == '1'){
-        	$sql = "SELECT * FROM admin 
+        	$sql = "SELECT * FROM Admin 
         	        WHERE username = ?";
         	$role = "Admin";
         }else if($role == '2'){
@@ -55,8 +55,8 @@ if (isset($_POST['uname']) &&
             	if (password_verify($pass, $password)) {
             		$_SESSION['role'] = $role;
             		if ($role == 'Admin') {
-                        $id = $user['admin_id'];
-                        $_SESSION['admin_id'] = $id;
+                        $id = $user['AdminId'];
+                        $_SESSION['AdminId'] = $id;
                         header("Location: ../admin/index.php");
                         exit;
                     }else if ($role == 'Student') {

@@ -1,6 +1,6 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && 
+if (isset($_SESSION['AdminId']) && 
     isset($_SESSION['role'])     &&
     isset($_GET['student_id'])) {
 

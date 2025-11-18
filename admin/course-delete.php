@@ -1,30 +1,33 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && 
-    isset($_SESSION['role'])     &&
-    isset($_GET['course_id'])) {
+if (isset($_SESSION['AdminId']) && 
+    isset($_SESSION['role']) &&
+    isset($_GET['CourseID'])) {
 
   if ($_SESSION['role'] == 'Admin') {
+
      include "../DB_connection.php";
      include "data/course.php";
 
-     $id = $_GET['course_id'];
+     $id = $_GET['CourseID'];
+
      if (removeCourse($id, $conn)) {
      	$sm = "Successfully deleted!";
         header("Location: course.php?success=$sm");
         exit;
-     }else {
+     } else {
         $em = "Unknown error occurred";
         header("Location: course.php?error=$em");
         exit;
      }
 
-
-  }else {
+  } else {
     header("Location: course.php");
     exit;
-  } 
-}else {
+  }
+
+} else {
 	header("Location: course.php");
 	exit;
-} 
+}
+?>

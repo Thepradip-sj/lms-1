@@ -1,5 +1,5 @@
 <?php 
-// All Grades
+
 function getAllGrades($conn){
    $sql = "SELECT * FROM grades";
    $stmt = $conn->prepare($sql);

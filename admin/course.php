@@ -1,21 +1,21 @@
 <?php 
 session_start();
-if (isset($_SESSION['admin_id']) && 
+if (isset($_SESSION['AdminId']) && 
     isset($_SESSION['role'])) {
 
     if ($_SESSION['role'] == 'Admin') {
        include "../DB_connection.php";
-       include "data/subject.php";
-       include "data/grade.php";
-       $courses = getAllSubjects($conn);
-       
+       include "data/course.php";
+       include "data/instructor.php";
+
+       $courses = getAllCourses($conn);
  ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Admin - Course</title>
+	<title>Admin - Courses</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css">
 	<link rel="stylesheet" href="../css/style.css">
 	<link rel="icon" href="../logo.png">
@@ -23,97 +23,69 @@ if (isset($_SESSION['admin_id']) &&
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
-    <?php 
-        include "inc/navbar.php";
-        if ($courses != 0) {
-     ?>
+    <?php include "inc/navbar.php"; ?>
+
      <div class="container mt-5">
-        <a href="course-add.php"
-           class="btn btn-dark">Add New Course</a>
+        <a href="course-add.php" class="btn btn-dark">Add New Course</a>
 
-           <?php if (isset($_GET['error'])) { ?>
-            <div class="alert alert-danger mt-3 n-table" 
-                 role="alert">
-              <?=$_GET['error']?>
-            </div>
-            <?php } ?>
+        <?php if (isset($_GET['error'])) { ?>
+            <div class="alert alert-danger mt-3 n-table"><?=$_GET['error']?></div>
+        <?php } ?>
 
-          <?php if (isset($_GET['success'])) { ?>
-            <div class="alert alert-info mt-3 n-table" 
-                 role="alert">
-              <?=$_GET['success']?>
-            </div>
-            <?php } ?>
+        <?php if (isset($_GET['success'])) { ?>
+            <div class="alert alert-info mt-3 n-table"><?=$_GET['success']?></div>
+        <?php } ?>
 
-           <div class="table-responsive">
-              <table class="table table-bordered mt-3 n-table">
+        <?php if ($courses != 0) { ?>
+        <div class="table-responsive">
+            <table class="table table-bordered mt-3 n-table">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Course</th>
-                    <th scope="col">Course Code</th>
-                    <th scope="col">Grade</th>
+                    <th>#</th>
+                    <th>Course</th>
+                    <th>Credits</th>
+                    <th>Duration</th>
+                    <th>Instructor</th>
+                    <th>Action</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <?php $i = 0; foreach ($courses as $course ) { 
-                    $i++;  ?>
+                  <?php $i=0; foreach ($courses as $course) { $i++; 
+                       $inst = getInstructorById($course['InstructorId'], $conn);
+                  ?>
                   <tr>
-                    <th scope="row"><?=$i?></th>
+                    <th><?=$i?></th>
+                    <td><?=$course['CName']?></td>
+                    <td><?=$course['Credits']?></td>
+                    <td><?=$course['CDuration']?></td>
+                    <td><?=$inst['fname'].' '.$inst['lname']?></td>
                     <td>
-                      <?php 
-                          echo $course['subject'];
-                       ?>
-                    </td>
-                    <td>
-                      <?php 
-                          echo $course['subject_code'];
-                       ?>
-                    </td>
-                    <td>
-                      <?php 
-                          $grade = getGradeById($course['grade'], $conn);
-                          echo $grade['grade_code'].'-'.$grade['grade'];
-                       ?>
-                    </td>
-                    <td>
-                        <a href="course-edit.php?course_id=<?=$course['subject_id']?>"
-                           class="btn btn-warning">Edit</a>
-                           
-                        <a href="course-delete.php?course_id=<?=$course['subject_id']?>"
-                           class="btn btn-danger">Delete</a>
+                        <a href="course-edit.php?CourseID=<?=$course['CourseID']?>" class="btn btn-warning">Edit</a>
+                        <a href="course-delete.php?CourseID=<?=$course['CourseID']?>" class="btn btn-danger">Delete</a>
                     </td>
                   </tr>
-                <?php } ?>
+                  <?php } ?>
                 </tbody>
-              </table>
-           </div>
-         <?php }else{ ?>
-             <div class="alert alert-info .w-450 m-5" 
-                  role="alert">
-                Empty!
-              </div>
-         <?php } ?>
+            </table>
+        </div>
+        <?php } else { ?>
+            <div class="alert alert-info m-5">Empty!</div>
+        <?php } ?>
+
      </div>
-     
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>	
-    <script>
-        $(document).ready(function(){
-             $("#navLinks li:nth-child(8) a").addClass('active');
-        });
-    </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"></script>	
+<script>
+    $(document).ready(function(){
+        $("#navLinks li:nth-child(6) a").addClass('active');
+    });
+</script>
 
 </body>
 </html>
 <?php 
-
-  }else {
-    header("Location: ../login.php");
-    exit;
-  } 
-}else {
-	header("Location: ../login.php");
-	exit;
-} 
-
+  } else { header("Location: ../login.php"); exit; }
+} else {
+	header("Location: ../login.php"); exit;
+}
 ?>
